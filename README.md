@@ -18,4 +18,4 @@
 - Курс по FastAPI: https://youtube.com/playlist?list=PLeLN0qH0-mCVQKZ8-W1LhxDcVlWtTALCS&si=MUBeBteLrOy_W0xP
 - Курс по Sqlalchemy: https://www.youtube.com/playlist?list=PLeLN0qH0-mCXARD_K-USF2wHctxzEVp40
 - Курс по bootstrap 5: https://youtube.com/playlist?list=PL0lO_mIqDDFUQI5lrRlZfkApMWtJJ7GFE&si=kjKxRd1xagFzYFkd
- 
+ - Курс по Jinja2: https://www.youtube.com/playlist?list=PLA0M1Bcd0w8wfmtElObQrBbZjY6XeA06U
