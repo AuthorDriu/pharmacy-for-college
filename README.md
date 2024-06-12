@@ -13,3 +13,9 @@
 Установи все зависимости проекта командой `python3 -m pip install -r requirements.txt`. Если возникнут проблемы с зависимости для зависимостей - решай сам :kissing_heart:.
 
 Чтоб запустить сервер используй команду `uvicorn src.app:app`. Это запустит сервер. Ты сможешь увидеть результат вбив в поисковую строку браузера `http://127.0.0.1:8000`.
+
+## Используемые материалы при написании системы
+- Курс по FastAPI: https://youtube.com/playlist?list=PLeLN0qH0-mCVQKZ8-W1LhxDcVlWtTALCS&si=MUBeBteLrOy_W0xP
+- Курс по Sqlalchemy: https://www.youtube.com/playlist?list=PLeLN0qH0-mCXARD_K-USF2wHctxzEVp40
+- Курс по bootstrap 5: https://youtube.com/playlist?list=PL0lO_mIqDDFUQI5lrRlZfkApMWtJJ7GFE&si=kjKxRd1xagFzYFkd
+ 
