@@ -1,11 +1,9 @@
-from typing import Optional
+from typing import Optional, Tuple
 from pydantic import BaseModel, Field
 
 
-class Product(BaseModel):
+class Order(BaseModel):
     id: Optional[int] = None
-    title: str = Field(max_length=250)
-    description: str
+    customer: int
+    order: Tuple[int]
     cost: float
-    image: str = Field(max_length=250)
-    quantity: int = Field(ge=0)

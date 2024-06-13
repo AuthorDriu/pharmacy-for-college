@@ -21,4 +21,11 @@ def drop_database():
 
 
 def create_database():
+    import pathlib
+
+    path_to_db_dir = pathlib.Path(db_settings.PATH).parent
+
+    if not path_to_db_dir.exists():
+        path_to_db_dir.mkdir(parents=True)
+
     Base.metadata.create_all(engine)
