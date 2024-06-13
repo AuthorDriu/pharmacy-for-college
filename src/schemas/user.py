@@ -3,11 +3,15 @@ from typing import Optional
 from pydantic import BaseModel, EmailStr
 
 
-class Customer(BaseModel):
+class User(BaseModel):
     # Чтоб можно было использовать Customer когда его нет в БД id будет необязательным
     id: Optional[int] = None
     fullname: str
     email: EmailStr
+
+
+class Customer(User):
+    pass
 
 
 class Role(Enum):
@@ -16,7 +20,7 @@ class Role(Enum):
     Cleaner       = "Уборщик"
 
 
-class Employee(Customer):
+class Employee(User):
     role: Role
 
 
