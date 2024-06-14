@@ -39,7 +39,6 @@ class OrderRepository(IOrderRepository):
             new_order = OrdersTable(
                 customer=order.customer,
                 order=";".join(order.order),
-                cost=order.cost
             )
             session.add(new_order)
             session.commit()
@@ -50,7 +49,6 @@ class OrderRepository(IOrderRepository):
             new_order = OrdersTable(
                 customer=basket.customer,
                 order=basket.products,
-                cost=basket.cost
             )
             session.add(new_order)
             session.commit()
@@ -88,5 +86,4 @@ class OrderRepository(IOrderRepository):
             id=order.id,
             customer=order.customer,
             order=tuple(order.order.split(';')),
-            cost=order.cost
         )

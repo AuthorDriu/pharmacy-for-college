@@ -4,6 +4,7 @@ from src.database.db import create_database, drop_database
 from src.repositories.user import CustomersRepository, EmployeesRepository
 from src.repositories.product import ProductsRepository
 from src.repositories.order import OrderRepository
+from src.repositories.basket import BasketRepository
 
 from src.schemas.user import Customer, Employee, Role
 from src.schemas.product import Product
@@ -115,7 +116,6 @@ def test_add_order_from_basket():
         Basket(
             customer=1,
             products="1*2;6*3",
-            cost=5344
         )
     ) == 2
 
@@ -137,6 +137,63 @@ def test_delete_order():
     OrderRepository().delete(2)
     assert OrderRepository().find(1) is None
     assert OrderRepository().find(2) is None
+
+
+#=========================================================================
+#                         BasketRepository
+#=========================================================================
+
+
+def test_add_basketrec():
+    assert BasketRepository().add(
+        BasketRecord(
+            customer=1,
+            product=10,
+            quantity=1
+        )
+    ) == 1
+    assert BasketRepository().add(
+        BasketRecord(
+            customer=1,
+            product=9,
+            quantity=2
+        )
+    ) == 2
+    assert BasketRepository().add(
+        BasketRecord(
+            customer=1,
+            product=8,
+            quantity=3
+        )
+    ) == 3
+
+def test_find_basketrec():
+    assert BasketRepository().find(1).id == 1
+
+
+def test_find_all_basket_by_user():
+    assert BasketRepository().find_all_by_user(
+        Customer(
+            id=1,
+            fullname="Ладно, это уже я",
+            email="authordriu@yandex.ru"
+        )
+    ).products == "10*1;9*2;8*3"
+
+
+def test_delete_basketrec():
+    BasketRepository().delete(3)
+    assert BasketRepository().find(3) is None
+
+
+def test_delete_all_basketrecs_by_user():
+    user = Customer(
+        id=1,
+        fullname="ЭЭЭЭЭЭЭ ВСМЫСЛЕ",
+        email="authordriu@yandex.ru"
+    )
+    BasketRepository().delete_all_by_user(user)
+    assert BasketRepository().find_all_by_user(user) is None
 
 
 def test_dropping_database():

@@ -6,4 +6,3 @@ class Order(BaseModel):
     id: Optional[int] = None
     customer: int
     order: Tuple[str, ...]
-    cost: float
