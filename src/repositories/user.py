@@ -45,7 +45,9 @@ class CustomersRepository(IUsersRepository):
     def find(self, id: int) -> Optional[Customer]:
         with self.session_factory() as session:
             customer = session.get(CustomersTable, id)
-            return customer
+            if not customer:
+                return None
+            return CustomersRepository.to_scheme(customer)
     
     def find_by_email(self, email: str) -> Optional[Customer]:
         with self.session_factory() as session:
@@ -55,7 +57,17 @@ class CustomersRepository(IUsersRepository):
                 .filter(CustomersTable.email == email)
                 .one_or_none()
             )
-            return customer
+            if not customer:
+                return None
+            return CustomersRepository.to_scheme(customer)
+    
+    @staticmethod
+    def to_scheme(customer: CustomersTable) -> Customer:
+        return Customer(
+            id=customer.id,
+            fullname=customer.fullname,
+            email=customer.email
+        )
 
 
 class EmployeesRepository(IUsersRepository):
@@ -79,7 +91,9 @@ class EmployeesRepository(IUsersRepository):
     def find(self, id: int) -> Optional[Employee]:
         with self.session_factory() as session:
             employee = session.get(EmployeesTable, id)
-            return employee
+            if not employee:
+                return None
+            return EmployeesRepository.to_scheme(employee)
     
     def find_by_email(self, email: str) -> Optional[Employee]:
         with self.session_factory() as session:
@@ -89,4 +103,15 @@ class EmployeesRepository(IUsersRepository):
                 .filter(EmployeesTable.email == email)
                 .one_or_none()
             )
-            return employee
+            if not employee:
+                return None
+            return EmployeesRepository.to_scheme(employee)
+    
+    @staticmethod
+    def to_scheme(employee: EmployeesTable) -> Employee:
+        return Employee(
+            id=employee.id,
+            fullname=employee.fullname,
+            email=employee.email,
+            role=employee.role
+        )

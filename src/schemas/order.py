@@ -5,5 +5,5 @@ from pydantic import BaseModel, Field
 class Order(BaseModel):
     id: Optional[int] = None
     customer: int
-    order: Tuple[int]
+    order: Tuple[str, ...]
     cost: float
