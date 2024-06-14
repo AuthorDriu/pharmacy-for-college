@@ -79,7 +79,7 @@ class BasketRepository(IBasketRepository):
             return BasketRepository.to_schema(basketrecs)
 
     @staticmethod
-    def to_schema(
+    def to_scheme(
         basket: Union[BasketTable, List[BasketTable]]
     ) -> Union[BasketRecord, Optional[Basket]]:
         
