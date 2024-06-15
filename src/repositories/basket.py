@@ -66,7 +66,7 @@ class BasketRepository(IBasketRepository):
             basketrec = session.get(BasketTable, id)
             if not basketrec:
                 return None
-            return BasketRepository.to_schema(basketrec)
+            return BasketRepository.to_scheme(basketrec)
 
     def find_all_by_user(self, user: User) -> Optional[Basket]:
         with self.session_factory() as session:
@@ -76,7 +76,7 @@ class BasketRepository(IBasketRepository):
                 .filter(BasketTable.customer == user.id)
                 .all()
             )
-            return BasketRepository.to_schema(basketrecs)
+            return BasketRepository.to_scheme(basketrecs)
 
     @staticmethod
     def to_scheme(

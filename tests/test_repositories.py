@@ -5,11 +5,14 @@ from src.repositories.user import CustomersRepository, EmployeesRepository
 from src.repositories.product import ProductsRepository
 from src.repositories.order import OrderRepository
 from src.repositories.basket import BasketRepository
+from src.repositories.supplier import SuppliersRepository
+from src.repositories.supply import SuppliesRepository
 
 from src.schemas.user import Customer, Employee, Role
 from src.schemas.product import Product
 from src.schemas.order import Order
 from src.schemas.basket import BasketRecord, Basket
+from src.schemas.supply import Supplier, Supply
 
 
 def test_creating_database():
@@ -194,6 +197,99 @@ def test_delete_all_basketrecs_by_user():
     )
     BasketRepository().delete_all_by_user(user)
     assert BasketRepository().find_all_by_user(user) is None
+
+
+#=========================================================================
+#                         BasketRepository
+#=========================================================================
+
+
+def test_add_supplier():
+    assert SuppliersRepository().add(
+        Supplier(
+            name="ООО \"Cactus Infrastructure\""
+        )
+    ) == 1
+
+
+def test_find_supplier():
+    assert SuppliersRepository().find(1).id == 1
+
+
+def test_find_by_name():
+    assert SuppliersRepository().find_by_name(
+        "ООО \"Cactus Infrastructure\""
+    ).id == 1
+
+
+def test_delete_supplier():
+    SuppliersRepository().delete(1)
+    assert SuppliersRepository().find(1) is None
+
+
+#=========================================================================
+#                         BasketRepository
+#=========================================================================
+
+
+def test_add_supply():
+    assert SuppliesRepository().add(
+        Supply(
+            supplier=1,
+            product=1
+        )
+    ) == 1
+    assert SuppliesRepository().add(
+        Supply(
+            supplier=1,
+            product=2
+        )
+    ) == 2
+    assert SuppliesRepository().add(
+        Supply(
+            supplier=1,
+            product=3
+        )
+    ) == 3
+
+
+def test_find_supply():
+    assert SuppliesRepository().find(1).supplier == 1
+
+
+def test_find_all_by_supplier():
+    assert len(
+        SuppliesRepository()
+        .find_all_by_supplier(
+            Supplier(
+                id=1,
+                name="ООО \"Cactus Infrastructure\""
+            )
+        )
+    ) == 3
+
+
+def test_delete_supply():
+    SuppliesRepository().delete(1)
+    assert SuppliesRepository().find(1) is None
+
+
+def test_delete_all_supplies_by_supplier():
+    SuppliesRepository().delete_all_by_supplier(
+        Supplier(
+            id=1,
+            name="ООО \"Cactus Infrastructure\""
+        )
+    )
+    assert len(
+        SuppliesRepository()
+        .find_all_by_supplier(
+            Supplier(
+                id=1,
+                name="ООО \"Cactus Infrastructure\""
+            )
+        )
+    ) == 0
 
 
 def test_dropping_database():
