@@ -51,4 +51,25 @@ class DatabaseSettings:
         return self._PORT
 
 
+class AuthSettings:
+    def __init__(self):
+        self._SECRET_KEY = environ.get("AUTH_SECRET_KEY", "Cactus's secret key =)")
+        self._ALGOTITHM = environ.get("AUTH_ALGORITHM", "SH256")
+        #self._TVT = environ.get("AUTH_TVT", 20) # Token Validation Time
+    
+    @property
+    def SECRET_KEY(self):
+        """Секретный ключ"""
+        return self._SECRET_KEY
+
+    @property
+    def ALGORITHM(self):
+        """Алгоритм подписи"""
+        return self._ALGOTITHM
+    
+    # @property
+    # def TVT(self):
+    #     return self._TVT
+
 db_settings = DatabaseSettings()
+auth_settings = AuthSettings()
