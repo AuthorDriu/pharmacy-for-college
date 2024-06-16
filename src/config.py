@@ -7,7 +7,7 @@ load_dotenv()
 
 class DatabaseSettings:
     def __init__(self):
-        self._DBMS = environ.get('DB_DBMS')
+        self._DBMS = environ.get('DB_DBMS', 'sqlite')
         self._DRIVER = environ.get('DB_DRIVER')
         self._PASSWORD = environ.get('DB_PASSWORD')
         self._USER = environ.get('DB_USER')
@@ -54,7 +54,7 @@ class DatabaseSettings:
 class AuthSettings:
     def __init__(self):
         self._SECRET_KEY = environ.get("AUTH_SECRET_KEY", "Cactus's secret key =)")
-        self._ALGOTITHM = environ.get("AUTH_ALGORITHM", "SH256")
+        self._ALGOTITHM = environ.get("AUTH_ALGORITHM", "HS256")
         #self._TVT = environ.get("AUTH_TVT", 20) # Token Validation Time
     
     @property
@@ -71,5 +71,31 @@ class AuthSettings:
     # def TVT(self):
     #     return self._TVT
 
+
+class MailSettings:
+    def __init__(self):
+        self._LOGIN = environ.get("MAIL_LOGIN")
+        self._PASS = environ.get("MAIL_PASSWORD")
+        self._SMTP = environ.get("MAIL_SMTP")
+        self._PORT = int(environ.get("MAIL_PORT"))
+    
+    @property
+    def LOGIN(self):
+        return self._LOGIN
+    
+    @property
+    def PASS(self):
+        return self._PASS
+    
+    @property
+    def SMTP(self):
+        return self._SMTP
+    
+    @property
+    def PORT(self):
+        return self._PORT
+
+
 db_settings = DatabaseSettings()
 auth_settings = AuthSettings()
+email_settings = MailSettings()

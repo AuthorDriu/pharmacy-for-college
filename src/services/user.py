@@ -29,10 +29,24 @@ class UserService:
         # является ли пользователь собой или нет. Потом доделаю.
         return user
     
-    def __create_access_token(self, fullname: str, email: str) -> Token:
+    def exitst(self, email: str) -> bool:
+        """Проверяет существует ли пользователь в базе данных"""
+        return self.repo.find_by_email(email) is not None
+
+    def create_access_token(self, fullname: str, email: str) -> Token:
         encode = { "fullname": fullname, "email": email }
-        return jwt.encode(encode, self.secret_key, algorithm=self.algorithm)
+        return Token(
+            access_token=jwt.encode(encode, self.secret_key, algorithm=self.algorithm),
+            token_type="bearer"
+        )
     
+    def current_user(self, token: str) -> Optional[User]:
+        try:
+            payload = jwt.decode(token, key=self.secret_key, algorithms=self.algorithm)
+            return self.authenticate(payload["email"])
+        except JWTError:
+            return None
+
 
 def get_employee_service():
     yield UserService(EmployeesRepository())
