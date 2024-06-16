@@ -9,7 +9,7 @@ class LoginService:
         self.repo = auth_repo
 
     def send_code(self, user: User) -> int:
-        code = codegen()
+        code = codegen(6)
         cid = self.repo.add(user, code)
         mail.send(
             reciever=user.email,
