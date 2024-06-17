@@ -4,6 +4,7 @@ from src.schemas.user import User
 from src.utils.mail import mail
 from src.utils.codegen import codegen
 
+
 class LoginService:
     def __init__(self, auth_repo: IAuthRepository):
         self.repo = auth_repo
