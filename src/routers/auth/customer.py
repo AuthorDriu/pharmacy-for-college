@@ -6,7 +6,7 @@ from src.services.login import LoginService, get_login_service
 from src.schemas.user import User
 from src.schemas.token import Token
 
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Response, HTTPException, Depends
 from starlette import status
 
 from pydantic import BaseModel, EmailStr
@@ -48,6 +48,7 @@ def auth_first_step(
 
 @router.get("/token")
 def get_access_token_for_customer(
+    response: Response,
     email: EmailStr,
     code: str,
     login_service:  Annotated[LoginService, Depends(get_login_service)],
@@ -67,4 +68,6 @@ def get_access_token_for_customer(
 
 
     token = user_service.create_access_token(user.fullname, user.email)
+    response.set_cookie(key="Token", value=token.model_dump_json())
+    
     return token

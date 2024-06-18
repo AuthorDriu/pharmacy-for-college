@@ -8,6 +8,9 @@ from src.config import auth_settings
 
 from jose import jwt, JWTError
 
+from fastapi import HTTPException
+from starlette import status
+
 
 class UserService:
     def __init__(self, user_repository: IUsersRepository):
@@ -19,14 +22,18 @@ class UserService:
         uid = self.repo.add(user)
         return uid
     
+
+    def user_from_token(self, request) -> Optional[User]:
+        token = Token.model_validate_json(request.cookies["Token"])
+        user = self.current_user(token.access_token)
+        if not user:
+            raise HTTPException(status.HTTP_401_UNAUTHORIZED)
+        return user
+
+
     def authenticate(self, email: str) -> Optional[User]:
         # Проверяю есть ли данный пользователь в базе данных
         user = self.repo.find_by_email(email)
-        if not user:
-            return None
-        
-        # Пока что здесь сразу возвращается пользователь без какой либо проверки
-        # является ли пользователь собой или нет. Потом доделаю.
         return user
     
     def exitst(self, email: str) -> bool:
@@ -42,7 +49,7 @@ class UserService:
     
     def current_user(self, token: str) -> Optional[User]:
         try:
-            payload = jwt.decode(token, key=self.secret_key, algorithms=self.algorithm)
+            payload = jwt.decode(token, self.secret_key, algorithms=self.algorithm)
             return self.authenticate(payload["email"])
         except JWTError:
             return None
