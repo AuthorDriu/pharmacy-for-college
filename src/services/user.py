@@ -24,7 +24,11 @@ class UserService:
     
 
     def user_from_token(self, request) -> Optional[User]:
-        token = Token.model_validate_json(request.cookies["Token"])
+        token_json = request.cookies.get("Token", None)
+        if not token_json:
+            raise HTTPException(status.HTTP_400_BAD_REQUEST, "Пройдите аутентификацию")
+
+        token = Token.model_validate_json(token_json)
         user = self.current_user(token.access_token)
         if not user:
             raise HTTPException(status.HTTP_401_UNAUTHORIZED)
