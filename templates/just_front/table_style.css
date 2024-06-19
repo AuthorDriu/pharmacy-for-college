@@ -1,0 +1,16 @@
+/* внешние границы таблицы серого цвета толщиной 1px */
+table {
+    border: 1px solid rgb(155, 155, 155);
+    text-align:center;
+    
+ }
+ /* границы ячеек первого ряда таблицы */
+ th {
+    border: 1px solid rgb(155, 155, 155);
+ }
+ /* границы ячеек тела таблицы */
+ td {
+    border: 1px solid rgb(155, 155, 155);
+    margin-left:20px;
+    margin-right:20px;
+ }
