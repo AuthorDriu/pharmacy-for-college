@@ -10,6 +10,7 @@ from fastapi.templating import Jinja2Templates
 from src.database.db import create_database
 
 from src.routers import auth
+from src.routers import products
 
 
 from fastapi import applications
@@ -35,6 +36,7 @@ templates = Jinja2Templates(directory="templates")
 
 
 app.include_router(auth.router)
+app.include_router(products.router)
 
 
 @app.get("/", response_class=HTMLResponse)
